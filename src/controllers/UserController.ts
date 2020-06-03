@@ -12,9 +12,9 @@ interface User {
   id: number;
   email: string;
   name: string;
-  avatarId?: number;
-  path?: string;
-  url?: string;
+  avatarId: number | null;
+  path: string | null;
+  url: string | null;
 }
 
 class UserController {
@@ -22,13 +22,13 @@ class UserController {
     const nameSearch = req.params.name || '';
 
     const Users = await prisma.raw<User[]>(
-      `SELECT "User"."id", "User"."email", "User"."name", 
-      "User"."avatarId", "Avatar"."path", "Avatar"."url"
-      FROM "User" 
-      INNER JOIN "Avatar"
-      ON "User"."avatarId" = "Avatar"."id" 
-      WHERE unaccent(name) ~* unaccent('${nameSearch}') 
-      ORDER BY "User"."createdAt"`,
+      `SELECT public."User"."id", public."User"."email", public."User"."name", 
+      public."User"."avatarId", public."Avatar"."path", public."Avatar"."url"
+      FROM public."User" 
+      LEFT OUTER JOIN public."Avatar"
+      ON public."User"."avatarId" = public."Avatar"."id" 
+      WHERE public.unaccent(name) ~* public.unaccent('${nameSearch}') 
+      ORDER BY public."User"."createdAt"`,
     );
 
     return res.json(Users);

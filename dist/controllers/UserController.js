@@ -22,9 +22,9 @@ class UserController {
             const Users = yield prisma.raw(`SELECT public."User"."id", public."User"."email", public."User"."name", 
       public."User"."avatarId", public."Avatar"."path", public."Avatar"."url"
       FROM public."User" 
-      INNER JOIN public."Avatar"
+      LEFT OUTER JOIN public."Avatar"
       ON public."User"."avatarId" = public."Avatar"."id" 
-      WHERE unaccent(name) ~* unaccent('${nameSearch}') 
+      WHERE public.unaccent(name) ~* public.unaccent('${nameSearch}') 
       ORDER BY public."User"."createdAt"`);
             return res.json(Users);
         });
