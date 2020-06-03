@@ -27,7 +27,7 @@ class UserController {
       FROM public."User" 
       INNER JOIN public."Avatar"
       ON public."User"."avatarId" = public."Avatar"."id" 
-      WHERE public.unaccent(name) ~* public.unaccent('${nameSearch}') 
+      WHERE unaccent(name) ~* unaccent('${nameSearch}') 
       ORDER BY public."User"."createdAt"`,
     );
 
