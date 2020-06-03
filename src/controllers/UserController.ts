@@ -22,13 +22,13 @@ class UserController {
     const nameSearch = req.params.name || '';
 
     const Users = await prisma.raw<User[]>(
-      `SELECT public."User"."id", public."User"."email", public."User"."name", 
-      public."User"."avatarId", public."Avatar"."path", public."Avatar"."url"
-      FROM public."User" 
-      INNER JOIN public."Avatar"
-      ON public."User"."avatarId" = public."Avatar"."id" 
+      `SELECT "User"."id", "User"."email", "User"."name", 
+      "User"."avatarId", "Avatar"."path", "Avatar"."url"
+      FROM "User" 
+      INNER JOIN "Avatar"
+      ON "User"."avatarId" = "Avatar"."id" 
       WHERE unaccent(name) ~* unaccent('${nameSearch}') 
-      ORDER BY public."User"."createdAt"`,
+      ORDER BY "User"."createdAt"`,
     );
 
     return res.json(Users);
