@@ -68,7 +68,7 @@ class QuestionController {
       },
     });
 
-    return res.status(200).json('Pergunta enviada!');
+    return res.status(200).json('Question send!');
   }
 
   async update(req: Request, res: Response): Promise<Response> {
